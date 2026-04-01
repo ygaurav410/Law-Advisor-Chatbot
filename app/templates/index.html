@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexiAI - Legal Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="#workspace">Templates</a>
+                <a href="#workspace">Analyze</a>
+                <a href="#results">Results</a>
+                <a href="/chat">Chat</a>
+                <a href="#workspace">FAQ</a>
+                <a href="#workspace">Blog</a>
+            </nav>
+
+            <a href="/" class="brand-mark" aria-label="LexiAI home">
+                <span class="brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 48 48" role="img">
+                        <path d="M8 31.5 20.4 12c1.6-2.5 5.3-2.6 7-.2l4.6 6.5-5.5 7.7-3.4-4.7-7.7 12.2Z"></path>
+                        <path d="M23.2 33.5 31.8 21c1.7-2.4 5.2-2.3 6.8.2L40 23.4c1.5 2.4-.2 5.6-3.1 5.6h-8.8Z"></path>
+                    </svg>
+                </span>
+                <span>LexiAI</span>
+            </a>
+
+            <div class="header-actions">
+                <button type="button" id="openAuthButton" class="ghost-button">Sign in</button>
+                <button type="button" id="headerCreateAccountButton" class="primary-button">Create account</button>
+                <div id="userMenu" class="user-menu" hidden>
+                    <div class="user-identity">
+                        <span id="userAvatar" class="user-avatar">L</span>
+                        <div class="user-copy">
+                            <strong id="userName">Legal user</strong>
+                            <span id="userEmail">name@example.com</span>
+                        </div>
+                    </div>
+                    <button type="button" id="logoutButton" class="logout-button">Log out</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero-grid">
+                <article class="hero-card hero-copy">
+                    <p class="eyebrow">Personal legal AI</p>
+                    <h1>LexiAI: your personal legal AI assistant</h1>
+                    <p class="hero-text">
+                        Upload contracts, get structured risk summaries, and ask precise
+                        follow-up questions without digging through dense legal language.
+                    </p>
+
+                    <div class="hero-actions">
+                        <button type="button" id="heroAuthButton" class="cta-button">Create Account</button>
+                        <a href="#results" class="secondary-link">See output</a>
+                    </div>
+
+                    <div class="audience-toggle" aria-label="Audience selection">
+                        <button type="button" class="audience-pill active">For founders</button>
+                        <button type="button" class="audience-pill">For legal teams</button>
+                    </div>
+
+                    <p class="hero-caption">
+                        Say goodbye to expensive consultations, long waits for appointments,
+                        and confusing legal texts.
+                    </p>
+                </article>
+
+                <article class="hero-card hero-preview">
+                    <div class="preview-badge">
+                        <span>Document insight engine</span>
+                        <strong>Built for fast review</strong>
+                    </div>
+
+                    <div class="preview-stage">
+                        <div class="browser-mock">
+                            <div class="browser-top">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="browser-layout">
+                                <aside class="browser-sidebar">
+                                    <div class="sidebar-logo"></div>
+                                    <div class="sidebar-pill active"></div>
+                                    <div class="sidebar-pill"></div>
+                                    <div class="sidebar-pill"></div>
+                                    <div class="sidebar-pill"></div>
+                                </aside>
+                                <div class="browser-content">
+                                    <div class="content-header"></div>
+                                    <div class="chat-list">
+                                        <div class="chat-row wide"></div>
+                                        <div class="chat-row"></div>
+                                        <div class="chat-row"></div>
+                                        <div class="chat-row narrow"></div>
+                                    </div>
+                                    <div class="content-header short"></div>
+                                    <div class="chat-list">
+                                        <div class="chat-row"></div>
+                                        <div class="chat-row wide"></div>
+                                        <div class="chat-row"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="phone-mock">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <div class="phone-header"></div>
+                                <div class="phone-pill"></div>
+                                <div class="phone-card"></div>
+                                <div class="phone-card faint"></div>
+                                <div class="phone-card faint"></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="workspace-section" id="workspace">
+                <div class="workspace-glow"></div>
+
+                <div class="workspace-heading">
+                    <p class="workspace-kicker">Try these prompts</p>
+                    <h2>Analyze a legal document, then keep the conversation going.</h2>
+                    <div class="prompt-row">
+                        <button type="button" class="prompt-chip" data-prompt="Summarize the payment, termination, and confidentiality clauses.">Summarize payment and termination clauses.</button>
+                        <button type="button" class="prompt-chip" data-prompt="List missing clauses, vague terms, and commercial risks in this agreement.">Flag missing clauses and risks.</button>
+                        <button type="button" class="prompt-chip" data-prompt="What obligations does the client have in this document?">What obligations does the client have?</button>
+                        <button type="button" class="prompt-chip" data-prompt="Create a short negotiation checklist for this contract.">Create a negotiation checklist.</button>
+                        <button type="button" class="prompt-chip" data-prompt="Explain this agreement in plain English for a founder.">Explain it in plain English.</button>
+                    </div>
+                </div>
+
+                <div class="composer-panel">
+                    <div class="composer-top">
+                        <label for="question" class="composer-label">Ask anything</label>
+                        <span class="composer-shortcut">Ctrl+Enter</span>
+                    </div>
+
+                    <textarea id="question" placeholder="Ask about clauses, risks, obligations, missing terms, or negotiation points."></textarea>
+
+                    <div class="composer-footer">
+                        <div class="composer-tools">
+                            <input type="file" id="fileInput" accept="application/pdf" hidden>
+                            <label for="fileInput" class="tool-chip file-chip">
+                                <span class="tool-icon">
+                                    <svg viewBox="0 0 24 24" role="img">
+                                        <path d="M8.5 12.5v4.2a3.3 3.3 0 0 0 6.6 0V8.2a2.1 2.1 0 1 0-4.2 0v7.9a.9.9 0 1 0 1.8 0V9.6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+                                    </svg>
+                                </span>
+                                <span id="fileName">Attach a PDF to analyze</span>
+                            </label>
+                            <span class="tool-chip muted-chip">Analyze content</span>
+                        </div>
+
+                        <div class="composer-actions">
+                            <button type="button" id="uploadButton" class="soft-button" onclick="uploadPDF()">Upload & Analyze</button>
+                            <button type="button" id="askButton" class="icon-button" onclick="askQuestion()" aria-label="Ask question">
+                                <svg viewBox="0 0 24 24" role="img">
+                                    <path d="M12 4.5a7.5 7.5 0 0 0-2 14.7v2.3l2.2-1.7c.6-.5 1.4-.8 2.2-.9A7.5 7.5 0 0 0 12 4.5Zm-1.1 5.1h2.2v5.2h-2.2Zm0 6.7h2.2v2.1h-2.2Z" fill="currentColor"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <p id="statusMessage" class="status-message">Upload a legal PDF to generate a structured summary and unlock follow-up Q&amp;A.</p>
+            </section>
+
+            <section class="chat-launch-strip">
+                <div>
+                    <p class="panel-kicker">Saved workspace</p>
+                    <h2>Continue longer conversations in the dedicated chat view.</h2>
+                    <p>Use the separate chat workspace to browse previous threads, switch documents, and keep the full back-and-forth in one place.</p>
+                </div>
+                <a id="chatLaunchButton" href="/chat" class="primary-button">Open Chat Workspace</a>
+            </section>
+
+            <section class="results-grid" id="results">
+                <article class="result-panel">
+                    <div class="panel-top">
+                        <div>
+                            <p class="panel-kicker">Document brief</p>
+                            <h3 id="summaryTitle">Summary dashboard</h3>
+                            <span id="summarySubtitle" class="panel-subtitle">Your latest uploaded brief will appear here.</span>
+                        </div>
+                        <button type="button" id="downloadButton" class="panel-action" onclick="downloadPDF()" disabled>Download PDF</button>
+                    </div>
+                    <div id="summary" class="summary-output">
+                        <div class="empty-card">
+                            <p>No summary yet.</p>
+                            <span>Your uploaded document will appear here as a structured legal brief.</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="result-panel answer-panel">
+                    <div class="panel-top">
+                        <div>
+                            <p class="panel-kicker">Conversation</p>
+                            <h3>Ask follow-up questions</h3>
+                        </div>
+                        <div class="panel-top-actions">
+                            <a id="openChatButton" href="/chat" class="panel-link-button">Open full chat</a>
+                            <span class="panel-badge">Live</span>
+                        </div>
+                    </div>
+                    <div id="answer" class="answer-output answer-empty">Ask a question after analyzing a PDF to get a document-grounded answer here.</div>
+                </article>
+            </section>
+
+            <section class="library-section" id="library">
+                <article class="library-panel">
+                    <div class="panel-top">
+                        <div>
+                            <p class="panel-kicker">Saved files</p>
+                            <h3>Your uploaded documents</h3>
+                            <span class="panel-subtitle">Recent uploads only. Open the full chat workspace to switch between documents and continue the thread.</span>
+                        </div>
+                        <a href="/chat" class="panel-outline-link">Open workspace</a>
+                    </div>
+                    <div id="documentHistory" class="history-list">
+                        <div class="history-empty">
+                            <p>No saved documents yet.</p>
+                            <span>Sign in and upload a file to build your personal library.</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="library-panel">
+                    <div class="panel-top">
+                        <div>
+                            <p class="panel-kicker">Conversation preview</p>
+                            <h3>Recent chat activity</h3>
+                            <span class="panel-subtitle">This is a preview of your latest saved questions. Open chat for the full thread view.</span>
+                        </div>
+                        <a href="/chat" class="panel-outline-link">Open chat</a>
+                    </div>
+                    <div id="conversationHistory" class="history-list">
+                        <div class="history-empty">
+                            <p>No conversations yet.</p>
+                            <span>Ask follow-up questions after a document is analyzed.</span>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <div id="authModal" class="modal-shell" hidden>
+        <div class="modal-backdrop" data-close-auth></div>
+        <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+            <button type="button" class="modal-close" data-close-auth aria-label="Close authentication dialog">x</button>
+
+            <div class="auth-intro">
+                <p class="panel-kicker">Account access</p>
+                <h2 id="authTitle">Sign in to save files and conversation history.</h2>
+                <p id="authMessage" class="auth-message">Use your email and password to save uploads, summaries, and previous conversations.</p>
+            </div>
+
+            <div class="auth-grid">
+                <section class="auth-card">
+                    <h3>Sign in</h3>
+                    <form id="loginForm" class="auth-form">
+                        <label class="field-group">
+                            <span>Email</span>
+                            <input type="email" id="loginEmail" required placeholder="you@example.com">
+                        </label>
+                        <label class="field-group">
+                            <span>Password</span>
+                            <input type="password" id="loginPassword" required placeholder="Your password">
+                        </label>
+                        <button type="submit" class="soft-button auth-submit">Sign in</button>
+                    </form>
+                </section>
+
+                <section class="auth-card">
+                    <h3>Create account</h3>
+                    <form id="registerForm" class="auth-form">
+                        <label class="field-group">
+                            <span>Full name</span>
+                            <input type="text" id="registerName" required placeholder="Your full name">
+                        </label>
+                        <label class="field-group">
+                            <span>Email</span>
+                            <input type="email" id="registerEmail" required placeholder="you@example.com">
+                        </label>
+                        <label class="field-group">
+                            <span>Password</span>
+                            <input type="password" id="registerPassword" required placeholder="At least 8 characters">
+                        </label>
+                        <button type="submit" class="soft-button auth-submit">Create account</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexiAI - Chat Workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="chat-page">
+    <div class="chat-shell">
+        <header class="site-header chat-header">
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="/">Home</a>
+                <a href="/#workspace">Analyze</a>
+                <a href="/#results">Results</a>
+                <a href="/chat" aria-current="page">Chat</a>
+            </nav>
+
+            <a href="/" class="brand-mark" aria-label="LexiAI home">
+                <span class="brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 48 48" role="img">
+                        <path d="M8 31.5 20.4 12c1.6-2.5 5.3-2.6 7-.2l4.6 6.5-5.5 7.7-3.4-4.7-7.7 12.2Z"></path>
+                        <path d="M23.2 33.5 31.8 21c1.7-2.4 5.2-2.3 6.8.2L40 23.4c1.5 2.4-.2 5.6-3.1 5.6h-8.8Z"></path>
+                    </svg>
+                </span>
+                <span>LexiAI</span>
+            </a>
+
+            <div class="header-actions">
+                <button type="button" id="openAuthButton" class="ghost-button">Sign in</button>
+                <button type="button" id="headerCreateAccountButton" class="primary-button">Create account</button>
+                <div id="userMenu" class="user-menu" hidden>
+                    <div class="user-identity">
+                        <span id="userAvatar" class="user-avatar">L</span>
+                        <div class="user-copy">
+                            <strong id="userName">Legal user</strong>
+                            <span id="userEmail">name@example.com</span>
+                        </div>
+                    </div>
+                    <button type="button" id="logoutButton" class="logout-button">Log out</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="chat-layout">
+            <aside class="chat-sidebar">
+                <div class="chat-sidebar-top">
+                    <p class="panel-kicker">Workspace</p>
+                    <h1>Saved document chats</h1>
+                    <p class="chat-sidebar-copy">Choose a saved upload to restore its summary and keep the conversation going.</p>
+                    <a href="/" class="soft-button sidebar-home-link">Upload another PDF</a>
+                </div>
+
+                <div id="chatDocumentList" class="chat-document-list">
+                    <div class="chat-sidebar-empty">
+                        <p>No documents yet.</p>
+                        <span>Upload a PDF on the home page to start a saved chat workspace.</span>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="chat-main">
+                <div class="chat-main-top">
+                    <div>
+                        <p class="panel-kicker">Conversation workspace</p>
+                        <h2 id="chatTitle">Select a saved document</h2>
+                        <p id="chatSubtitle" class="chat-subtitle">Open a document from the left to view its summary and previous conversation thread.</p>
+                    </div>
+                    <div class="chat-main-actions">
+                        <a id="chatHomeLink" href="/" class="ghost-button chat-action-link">Back home</a>
+                        <button type="button" id="chatDownloadButton" class="panel-action" disabled>Download PDF</button>
+                    </div>
+                </div>
+
+                <section id="chatSummaryCard" class="chat-summary-card">
+                    <div class="chat-summary-empty">
+                        <p>No document selected.</p>
+                        <span>Pick a saved document to load its brief, then continue the conversation below.</span>
+                    </div>
+                </section>
+
+                <section id="messageThread" class="message-thread">
+                    <div class="thread-empty">
+                        <p>Previous conversation will appear here.</p>
+                        <span>Once you select a document, your saved questions and answers will show up in a chat-style thread.</span>
+                    </div>
+                </section>
+
+                <form id="chatComposer" class="chat-composer">
+                    <div class="chat-composer-top">
+                        <label for="chatQuestion" class="composer-label">Ask a follow-up question</label>
+                        <span id="chatDocStatus" class="chat-doc-status">No document selected</span>
+                    </div>
+                    <textarea id="chatQuestion" placeholder="Ask about risks, payment terms, obligations, missing clauses, or negotiation points." rows="4"></textarea>
+                    <div class="chat-composer-actions">
+                        <p id="chatStatusMessage" class="chat-status-message">Select a document to unlock the saved conversation workspace.</p>
+                        <button type="submit" id="chatSendButton" class="cta-button" disabled>Send</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <div id="authModal" class="modal-shell" hidden>
+        <div class="modal-backdrop" data-close-auth></div>
+        <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+            <button type="button" class="modal-close" data-close-auth aria-label="Close authentication dialog">x</button>
+
+            <div class="auth-intro">
+                <p class="panel-kicker">Account access</p>
+                <h2 id="authTitle">Sign in to open your saved chat workspace.</h2>
+                <p id="authMessage" class="auth-message">Use your email and password to restore uploads, summaries, and previous conversations.</p>
+            </div>
+
+            <div class="auth-grid">
+                <section class="auth-card">
+                    <h3>Sign in</h3>
+                    <form id="loginForm" class="auth-form">
+                        <label class="field-group">
+                            <span>Email</span>
+                            <input type="email" id="loginEmail" required placeholder="you@example.com">
+                        </label>
+                        <label class="field-group">
+                            <span>Password</span>
+                            <input type="password" id="loginPassword" required placeholder="Your password">
+                        </label>
+                        <button type="submit" class="soft-button auth-submit">Sign in</button>
+                    </form>
+                </section>
+
+                <section class="auth-card">
+                    <h3>Create account</h3>
+                    <form id="registerForm" class="auth-form">
+                        <label class="field-group">
+                            <span>Full name</span>
+                            <input type="text" id="registerName" required placeholder="Your full name">
+                        </label>
+                        <label class="field-group">
+                            <span>Email</span>
+                            <input type="email" id="registerEmail" required placeholder="you@example.com">
+                        </label>
+                        <label class="field-group">
+                            <span>Password</span>
+                            <input type="password" id="registerPassword" required placeholder="At least 8 characters">
+                        </label>
+                        <button type="submit" class="soft-button auth-submit">Create account</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/chat.js"></script>
+</body>
+</html>
