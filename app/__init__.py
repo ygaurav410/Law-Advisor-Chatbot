@@ -10,7 +10,14 @@ def create_app():
     app = Flask(__name__)
     
     app.config.from_object(Config)
-    os.makedirs(app.config["DATA_FOLDER"], exist_ok=True)
+
+    for folder in (
+        app.config["DATA_FOLDER"],
+        app.config["UPLOAD_FOLDER"],
+        app.config["VECTOR_DB_PATH"],
+    ):
+        os.makedirs(folder, exist_ok=True)
+
     init_extensions(app)
 
     from .routes.upload import upload_bp

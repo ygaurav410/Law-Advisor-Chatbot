@@ -233,6 +233,41 @@ Access:
 
 ---
 
+## Deployment
+
+The app is configured to run in both local development and hosted environments.
+
+### Deployment-ready changes included
+
+- `wsgi.py` exposes the Flask app for production servers
+- `Procfile` starts the app with Gunicorn
+- `DATABASE_URL` is supported for hosted databases such as PostgreSQL
+- upload, data, and retrieval storage paths can be configured through environment variables
+- `PORT` and `FLASK_DEBUG` are environment-driven instead of hardcoded
+
+### Recommended production environment variables
+
+```env
+GEMINI_API_KEY=your_api_key
+FLASK_SECRET_KEY=replace_with_a_long_random_secret
+DATABASE_URL=your_database_url
+DATA_FOLDER=/opt/render/project/src/data
+UPLOAD_FOLDER=/opt/render/project/src/uploads
+VECTOR_DB_PATH=/opt/render/project/src/vector_store
+SESSION_COOKIE_SECURE=true
+PREFERRED_URL_SCHEME=https
+FLASK_DEBUG=false
+```
+
+### Hosting notes
+
+- Local development falls back to SQLite automatically if `DATABASE_URL` is not set.
+- For production, a managed database is recommended so user data survives redeploys more reliably.
+- Uploaded files and retrieval chunks are stored on disk, so a persistent disk or mounted volume is recommended in production.
+- The app automatically reads the hosting platform's `PORT` value when provided.
+
+---
+
 ## Future Improvements
 
 - OCR support for scanned documents  
