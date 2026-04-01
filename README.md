@@ -1,8 +1,8 @@
 # LexiAI
 
-LexiAI is an AI-powered legal document analysis platform that allows users to upload contracts, generate structured summaries, ask follow-up questions, and revisit previous document conversations in a persistent workspace.
+LexiAI is an AI-powered legal document analysis platform built to turn long, dense legal PDFs into structured summaries and document-grounded conversations.
 
-The focus of this project was to move beyond a simple AI demo and build something closer to a usable product — with authentication, saved history, document-specific context, and a cleaner multi-page interaction flow.
+The project moves beyond a simple AI demo and into a more product-like workflow with authentication, saved history, document-specific context, PDF export, and a separate chat workspace for continuing previous analysis sessions.
 
 ---
 
@@ -95,9 +95,9 @@ Generated summaries can be exported as PDF reports. This makes it easier to save
 
 ---
 
-## Technical Implementation
+## Technical Highlights
 
-This project combines backend development, AI integration, persistence, and UI flow design.
+This project combines backend development, AI integration, persistence, UI workflow design, and deployment-oriented configuration.
 
 - Built a multi-route Flask application handling authentication, upload, Q&A, history, and downloads  
 - Structured the backend into routes, services, models, utilities, and templates  
@@ -107,6 +107,7 @@ This project combines backend development, AI integration, persistence, and UI f
 - Implemented response parsing, cleanup, and fallback handling for unreliable model output  
 - Built a local chunk-based retrieval system for grounded responses  
 - Designed a multi-page frontend instead of a single demo interface  
+- Added WSGI and Gunicorn support so the app can run in a hosted environment without code changes  
 
 ---
 
@@ -151,7 +152,8 @@ The upload and chat experiences are separated into different pages. This keeps t
 - Flask  
 - Flask-Login  
 - Flask-SQLAlchemy  
-- SQLite  
+- SQLite for local development  
+- PostgreSQL-ready configuration for production deployment  
 
 ### AI and Document Processing
 
@@ -166,9 +168,10 @@ The upload and chat experiences are separated into different pages. This keeps t
 - CSS  
 - Vanilla JavaScript  
 
-### Reporting
+### Reporting and Deployment
 
 - ReportLab  
+- Gunicorn  
 
 ---
 
@@ -176,9 +179,9 @@ The upload and chat experiences are separated into different pages. This keeps t
 
 The application uses three main entities:
 
-- **User** → authentication and account data  
-- **Document** → uploaded files, extracted text, and summaries  
-- **Conversation** → document-linked questions and answers  
+- **User** - authentication and account data  
+- **Document** - uploaded files, extracted text, storage paths, and summaries  
+- **Conversation** - document-linked questions and answers  
 
 This structure supports persistent history and document-specific interactions.
 
@@ -200,33 +203,44 @@ data/            # SQLite database
 uploads/         # user-uploaded PDFs
 vector_store/    # chunk data for retrieval
 
-run.py           # entry point
+run.py           # local development entry point
+wsgi.py          # WSGI entry point for deployment
+Procfile         # Gunicorn startup command
 ```
 
 ---
 
 ## Running the Project
 
-Install dependencies:
+### 1. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Create a `.env` file:
+### 2. Create environment variables
 
-```
-GEMINI_API_KEY=your_api_key
-FLASK_SECRET_KEY=your_secret_key
+Copy `.env.example` to `.env` and fill in your values:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
+FLASK_SECRET_KEY=replace_with_a_long_random_secret
+DATABASE_URL=
+DATA_FOLDER=data
+UPLOAD_FOLDER=uploads
+VECTOR_DB_PATH=vector_store
+SESSION_COOKIE_SECURE=false
+PREFERRED_URL_SCHEME=https
+FLASK_DEBUG=false
 ```
 
-Run the app:
+### 3. Run the app
 
 ```bash
 python run.py
 ```
 
-Access:
+### 4. Access the app
 
 - http://127.0.0.1:5000/  
 - http://127.0.0.1:5000/chat  
@@ -244,6 +258,7 @@ The app is configured to run in both local development and hosted environments.
 - `DATABASE_URL` is supported for hosted databases such as PostgreSQL
 - upload, data, and retrieval storage paths can be configured through environment variables
 - `PORT` and `FLASK_DEBUG` are environment-driven instead of hardcoded
+- secure session cookie behavior can be enabled through environment configuration
 
 ### Recommended production environment variables
 
@@ -259,12 +274,39 @@ PREFERRED_URL_SCHEME=https
 FLASK_DEBUG=false
 ```
 
+### Suggested production command
+
+The current Procfile runs:
+
+```bash
+gunicorn --bind 0.0.0.0:$PORT wsgi:app
+```
+
 ### Hosting notes
 
 - Local development falls back to SQLite automatically if `DATABASE_URL` is not set.
 - For production, a managed database is recommended so user data survives redeploys more reliably.
 - Uploaded files and retrieval chunks are stored on disk, so a persistent disk or mounted volume is recommended in production.
 - The app automatically reads the hosting platform's `PORT` value when provided.
+
+### Good fit for deployment on
+
+- Render
+- Railway
+- Fly.io
+- any Python host that supports WSGI apps
+
+---
+
+## Why This Project Is Hiring-Worthy
+
+This project demonstrates more than prompt integration. It shows the ability to build an end-to-end AI application with:
+
+- persistent user accounts and saved workflows  
+- structured model-output handling  
+- document-grounded follow-up Q and A  
+- backend organization with routes, services, models, and utilities  
+- deployment-aware configuration for real hosting environments  
 
 ---
 
