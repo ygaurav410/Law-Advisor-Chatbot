@@ -6,3 +6,4 @@ data/
 *.db-journal
 __pycache__/
 *.pyc
+AIML_Practical_Report.md
